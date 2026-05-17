@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Saved Schemas</h2>
+
+<div class="actions">
+    <a class="button" href="/schemas/new">Create Schema</a>
+</div>
+
+{% if grouped_schemas %}
+    {% for vendor, schemas in grouped_schemas.items() %}
+    <section class="panel">
+        <h3>{{ vendor }}</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Block Name</th>
+                <th>Block Type</th>
+                <th>Version</th>
+                <th>Review Status</th>
+                <th>Changed By</th>
+                <th>Updated</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for schema in schemas %}
+            <tr>
+                <td>{{ schema.id }}</td>
+                <td>{{ schema.block_name }}</td>
+                <td>{{ schema.block_type }}</td>
+                <td>{{ schema.version }}</td>
+                <td>{{ schema.review_status }}</td>
+                <td>{{ schema.changed_by }}</td>
+                <td>{{ schema.updated_at }}</td>
+                <td><a href="/schemas/{{ schema.id }}/edit">Edit</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
+    {% endfor %}
+{% else %}
+<p>No schemas saved yet.</p>
+{% endif %}
+{% endblock %}

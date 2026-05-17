@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Create Schema</h2>
+
+<section class="panel">
+    <h3>Option 1: Generate from pasted PDF snippet</h3>
+
+    <form>
+        <label>Vendor</label>
+        <input name="vendor" value="Foxboro">
+
+        <label>Block Name</label>
+        <input name="block_name" value="PID Controller">
+
+        <label>Block Type</label>
+        <input name="block_type" value="PID">
+
+        <label>Version</label>
+        <input name="version" value="1.0">
+
+        <label>Paste PDF Snippet</label>
+        <textarea name="snippet" rows="10"></textarea>
+
+        <button
+            hx-post="/api/ingest/generate"
+            hx-target="#candidate"
+            hx-include="closest form">
+            Generate Candidate Schema
+        </button>
+    </form>
+</section>
+
+<div id="candidate"></div>
+
+<section class="panel">
+    <h3>Option 2: Create manually</h3>
+
+    <form>
+        <label>Vendor</label>
+        <input name="vendor" value="Foxboro">
+
+        <label>Block Name</label>
+        <input name="block_name" value="PID Controller">
+
+        <label>Block Type</label>
+        <input name="block_type" value="PID">
+
+        <label>Version</label>
+        <input name="version" value="1.0">
+
+        <label>Description</label>
+        <textarea name="description" rows="3"></textarea>
+
+        <label>Pins JSON</label>
+        <textarea name="pins_json" rows="8">[]</textarea>
+
+        <label>Parameters JSON</label>
+        <textarea name="parameters_json" rows="8">[]</textarea>
+
+        <label>Notes</label>
+        <textarea name="notes" rows="3"></textarea>
+
+        <button
+            hx-post="/api/schemas"
+            hx-target="#manual-save-result"
+            hx-include="closest form">
+            Save Schema
+        </button>
+    </form>
+
+    <div id="manual-save-result"></div>
+</section>
+{% endblock %}

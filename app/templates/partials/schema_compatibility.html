@@ -1,0 +1,40 @@
+<section class="panel">
+    <h3>Compatibility Result</h3>
+
+    <p>
+        <strong>Status:</strong>
+        {{ compatibility.status }}
+    </p>
+
+    <p>
+        <strong>Score:</strong>
+        {{ compatibility.score }}/100
+    </p>
+
+    <h4>Reasons</h4>
+    <ul>
+        {% for reason in compatibility.reasons %}
+        <li>{{ reason }}</li>
+        {% endfor %}
+    </ul>
+
+    {% if compatibility.status == "Likely Incompatible" %}
+    <div class="warning">
+        These schemas may not map correctly. You can still generate suggestions and review them manually.
+    </div>
+    {% endif %}
+
+    <form>
+        <input type="hidden" name="source_schema_id" value="{{ source_schema.id }}">
+        <input type="hidden" name="target_schema_id" value="{{ target_schema.id }}">
+
+        <button
+            hx-post="/api/suggest/generate"
+            hx-target="#mapping-result"
+            hx-include="closest form">
+            Generate Mapping Suggestions
+        </button>
+    </form>
+
+    <div id="mapping-result"></div>
+</section>
