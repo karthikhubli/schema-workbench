@@ -75,3 +75,49 @@ def list_mappings() -> list[dict[str, Any]]:
         ).fetchall()
 
     return [dict(row) for row in rows]
+
+
+def mark_mappings_needing_update_for_block(
+    *,
+    vendor: str,
+    block_name: str,
+    changed_by: str = "local-user",
+) -> int:
+    logger.info(
+        "Marking mappings as Needs Update for vendor=%s block_name=%s",
+        vendor,
+        block_name,
+    )
+
+    with get_connection() as conn:
+        cursor = conn.execute(
+            """
+            UPDATE mappings
+            SET
+                review_status = 'Needs Update',
+                changed_by = ?,
+                updated_at = CURRENT_TIMESTAMP
+            WHERE source_schema_id IN (
+                SELECT id
+                FROM block_schemas
+                WHERE vendor = ? AND block_name = ?
+            )
+            OR target_schema_id IN (
+                SELECT id
+                FROM block_schemas
+                WHERE vendor = ? AND block_name = ?
+            )
+            """,
+            (
+                changed_by,
+                vendor,
+                block_name,
+                vendor,
+                block_name,
+            ),
+        )
+        conn.commit()
+        updated_count = cursor.rowcount
+
+    logger.info("Marked %s mappings as Needs Update", updated_count)
+    return int(updated_count)

@@ -67,7 +67,7 @@ Target Schema:
 
 
 def _normalize_ollama_response(response: Any) -> list[dict[str, Any]]:
-    """Accept either {mappings: [...]} or [...] and normalize to a list."""
+
     if isinstance(response, dict):
         mappings = response.get("mappings", [])
     elif isinstance(response, list):

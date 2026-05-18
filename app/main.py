@@ -19,7 +19,7 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 @app.on_event("startup")
 def startup() -> None:
-    reset_db()
+    # reset_db()
     init_db()
 
 
