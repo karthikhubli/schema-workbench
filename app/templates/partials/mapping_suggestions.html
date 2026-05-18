@@ -1,0 +1,48 @@
+<section class="panel">
+    <h3>Review Mapping Suggestions</h3>
+
+    {% if suggestions %}
+    <table>
+        <thead>
+        <tr>
+            <th>Type</th>
+            <th>Source</th>
+            <th>Suggested Target</th>
+            <th>Confidence</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in suggestions %}
+        <tr>
+            <td>{{ item.type }}</td>
+            <td>{{ item.source }}</td>
+            <td>{{ item.target }}</td>
+            <td>{{ item.confidence }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No suggestions generated. You can manually enter mapping JSON below.</p>
+    {% endif %}
+
+    <form>
+        <input type="hidden" name="source_schema_id" value="{{ source_schema_id }}">
+        <input type="hidden" name="target_schema_id" value="{{ target_schema_id }}">
+
+        <label>Editable Mapping JSON</label>
+        <textarea name="mapping_json" rows="14">{{ mapping_json }}</textarea>
+
+        <label>Notes</label>
+        <textarea name="notes" rows="4"></textarea>
+
+        <button
+            hx-post="/api/mappings/save"
+            hx-target="#mapping-save-result"
+            hx-include="closest form">
+            Save Reviewed Mapping
+        </button>
+    </form>
+
+    <div id="mapping-save-result"></div>
+</section>

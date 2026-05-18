@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Mappings</h2>
+
+<form>
+    <label>Source Schema</label>
+    <select name="source_schema_id">
+        {% for schema in schemas %}
+        <option value="{{ schema.id }}">
+            {{ schema.vendor }} / {{ schema.block_name }} ({{ schema.block_type }}) v{{ schema.version }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <label>Target Schema</label>
+    <select name="target_schema_id">
+        {% for schema in schemas %}
+        <option value="{{ schema.id }}">
+            {{ schema.vendor }} / {{ schema.block_name }} ({{ schema.block_type }}) v{{ schema.version }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <button
+        hx-post="/api/mappings/compatibility"
+        hx-target="#compatibility-result"
+        hx-include="closest form">
+        Check Compatibility
+    </button>
+</form>
+
+<div id="compatibility-result"></div>
+
+<hr>
+
+<h3>Saved Mappings</h3>
+
+{% if mappings %}
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Source</th>
+        <th>Target</th>
+        <th>Status</th>
+        <th>Created</th>
+        <th> Approve/Edit</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for mapping in mappings %}
+    <tr>
+        <td>{{ mapping.id }}</td>
+        <td>{{ mapping.source_label }}</td>
+        <td>{{ mapping.target_label }}</td>
+        <td>{{ mapping.review_status }}</td>
+        <td>{{ mapping.created_at }}</td>
+<td class="action-buttons">
+    <button>Approve</button>
+    <button>Edit</button>
+</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No mappings saved yet.</p>
+{% endif %}
+
+{% endblock %}

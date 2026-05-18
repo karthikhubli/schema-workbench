@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Edit Schema</h2>
+
+{% if schema %}
+<p>
+    Editing <strong>{{ schema.block_name }}</strong> for vendor <strong>{{ schema.vendor }}</strong>.
+    Saving creates a new version row. The block name stays the same; update only the version and schema details.
+</p>
+
+<form>
+    <input type="hidden" name="original_schema_id" value="{{ schema.id }}">
+    <label>Vendor</label>
+    <input name="vendor" value="{{ schema.vendor }}" readonly>
+
+    <label>Block Name</label>
+    <input name="block_name" value="{{ schema.block_name }}" readonly>
+
+    <label>Block Type</label>
+    <input name="block_type" value="{{ schema.block_type }}">
+
+    <label>New Version</label>
+    <input name="version" value="{{ schema.version }}">
+
+    <label>Description</label>
+    <textarea name="description" rows="3">{{ schema.description }}</textarea>
+
+    <label>Pins JSON</label>
+    <textarea name="pins_json" rows="10">{{ schema.pins_json }}</textarea>
+
+    <label>Parameters JSON</label>
+    <textarea name="parameters_json" rows="10">{{ schema.parameters_json }}</textarea>
+
+    <label>Notes</label>
+    <textarea name="notes" rows="3">{{ schema.notes }}</textarea>
+
+    <button
+        hx-post="/api/schemas/new-version"
+        hx-target="#result"
+        hx-include="closest form">
+        Save as New Version
+    </button>
+
+    <a class="button" href="/">Cancel</a>
+</form>
+
+<div id="result"></div>
+{% else %}
+<p class="error">Schema not found.</p>
+<a class="button" href="/">Back to Schemas</a>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Ingest Schema</h2>
+
+<form>
+    <label>Vendor</label>
+    <input name="vendor" value="Foxboro">
+
+    <label>Block Type</label>
+    <input name="block_type" value="PID">
+
+    <label>Version</label>
+    <input name="version" value="1.0">
+
+    <label>Paste PDF Snippet</label>
+    <textarea name="snippet" rows="10"></textarea>
+
+    <button
+        hx-post="/api/ingest/generate"
+        hx-target="#candidate"
+        hx-include="closest form">
+        Generate Candidate Schema
+    </button>
+</form>
+
+<div id="candidate"></div>
+
+<hr>
+
+<h2>Create Mapping</h2>
+
+<form>
+    <label>Source Schema</label>
+    <select name="source_schema_id">
+        {% for schema in schemas %}
+        <option value="{{ schema.id }}">{{ schema.vendor }}.{{ schema.block_type }} v{{ schema.version }}</option>
+        {% endfor %}
+    </select>
+
+    <label>Target Schema</label>
+    <select name="target_schema_id">
+        {% for schema in schemas %}
+        <option value="{{ schema.id }}">{{ schema.vendor }}.{{ schema.block_type }} v{{ schema.version }}</option>
+        {% endfor %}
+    </select>
+
+    <button
+        hx-post="/api/suggest/mappings"
+        hx-target="#mapping-suggestions"
+        hx-include="closest form">
+        Generate Mapping Suggestions
+    </button>
+
+    <div id="mapping-suggestions"></div>
+
+    <label>Mapping Notes</label>
+    <textarea name="mapping_notes" rows="3"></textarea>
+
+    <button
+        hx-post="/api/mappings"
+        hx-target="#mapping-result"
+        hx-include="closest form">
+        Save Mapping
+    </button>
+</form>
+
+<div id="mapping-result"></div>
+{% endblock %}

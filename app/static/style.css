@@ -1,0 +1,120 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f7f7f7;
+    color: #222;
+}
+
+header {
+    background: #222;
+    color: white;
+    padding: 16px 32px;
+}
+
+header h1 {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+}
+
+nav a {
+    color: white;
+    margin-right: 16px;
+    text-decoration: none;
+}
+
+main {
+    padding: 32px;
+    max-width: 1000px;
+}
+
+form,
+.panel {
+    background: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+    margin-bottom: 24px;
+}
+
+label {
+    display: block;
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    box-sizing: border-box;
+}
+
+.checkbox {
+    width: auto;
+}
+
+textarea {
+    font-family: monospace;
+}
+
+button,
+.button {
+    display: inline-block;
+    margin-top: 16px;
+    margin-right: 8px;
+    padding: 8px 14px;
+    background: #222;
+    color: white;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    margin-top: 16px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background: #eee;
+}
+
+.success {
+    margin-top: 16px;
+    padding: 12px;
+    background: #e8f5e9;
+    border: 1px solid #a5d6a7;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 32px 0;
+}
+
+.error {
+    margin-top: 16px;
+    padding: 12px;
+    background: #ffebee;
+    border: 1px solid #ef9a9a;
+}
+
+
+.warning {
+    background: #fff3cd;
+    border: 1px solid #ffecb5;
+    color: #664d03;
+    padding: 10px;
+    margin-top: 12px;
+}

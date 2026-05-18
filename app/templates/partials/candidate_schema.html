@@ -1,0 +1,39 @@
+<section class="panel">
+    <h3>Generated Candidate Schema</h3>
+    <p>Review and edit the generated values before saving.</p>
+
+    <form>
+        <label>Vendor</label>
+        <input name="vendor" value="{{ candidate.vendor }}">
+
+        <label>Block Name</label>
+        <input name="block_name" value="{{ candidate.block_name }}">
+
+        <label>Block Type</label>
+        <input name="block_type" value="{{ candidate.block_type }}">
+
+        <label>Version</label>
+        <input name="version" value="{{ candidate.version }}">
+
+        <label>Description</label>
+        <textarea name="description" rows="3">{{ candidate.description }}</textarea>
+
+        <label>Pins JSON</label>
+        <textarea name="pins_json" rows="8">{{ candidate.pins | tojson(indent=2) }}</textarea>
+
+        <label>Parameters JSON</label>
+        <textarea name="parameters_json" rows="8">{{ candidate.parameters | tojson(indent=2) }}</textarea>
+
+        <label>Notes</label>
+        <textarea name="notes" rows="3">{{ candidate.notes }}</textarea>
+
+        <button
+            hx-post="/api/schemas"
+            hx-target="#candidate-save-result"
+            hx-include="closest form">
+            Save Schema
+        </button>
+    </form>
+
+    <div id="candidate-save-result"></div>
+</section>
